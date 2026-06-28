@@ -242,7 +242,7 @@ else:
     
     # Initialize the LLM (natively mapped to Gemini via LiteLLM)
     gemini_llm = LLM(
-        model="gemini/gemini-1.5-flash",
+        model="gemini/gemini-3.5-flash",
         api_key=gemini_key,
         temperature=0.7
     )
