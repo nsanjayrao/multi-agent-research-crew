@@ -176,7 +176,7 @@ with st.sidebar:
         st.success("🔑 API Key loaded securely from Streamlit Cloud Secrets!")
         
     st.header("⚙️ Configure Research")
-    topic = st.text_input("Technology Topic to Research", value="Agentic AI", help="Enter any tech topic you want your agent team to investigate.")
+    topic = st.text_input("Technology Topic to Research", value="Agentic AI", help="Enter any topic you want the agent team to investigate.")
 
 # Visualizing the Team Structure (SaaS-styled cards)
 st.subheader("👥 Meet Your Autonomous Agent Team")
@@ -184,14 +184,14 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     st.markdown("""
-    <div class="agent-card agent-researcher">
+    <div class="agent-card">
         <div class="agent-title">
             <span>🔍 Researcher</span>
             <span class="agent-badge badge-blue">Phase 1</span>
         </div>
         <div class="agent-text">
             <strong>Role:</strong> Principal Research Analyst<br>
-            <strong>Goal:</strong> Uncover cutting-edge findings and structured data points.<br>
+            <strong>Goal:</strong> Uncover cutting-edge developments, insights, and factual data.<br>
             <strong>Backstory:</strong> Meticulous researcher with a passion for finding verified factual insights.
         </div>
     </div>
@@ -231,9 +231,18 @@ with col3:
 if not gemini_key:
     st.warning("Please configure your Google Gemini API Key in the sidebar to get started.")
 else:
+    # CRITICAL SECURITY FIX: Explicitly set Gemini API keys in the environment.
+    # CrewAI / LiteLLM looks for environment variables when calling sub-processes and tool tools.
+    # Without these environment variables, LiteLLM falls back to OpenAI and throws 401 errors.
+    os.environ["GEMINI_API_KEY"] = gemini_key
+    os.environ["GOOGLE_API_KEY"] = gemini_key
+    
+    # Disable telemetry and tracing to prevent unnecessary network calls/errors
+    os.environ["OTEL_SDK_DISABLED"] = "true"
+    
     # Initialize the LLM (natively mapped to Gemini via LiteLLM)
     gemini_llm = LLM(
-        model="gemini-3.5-flash",
+        model="gemini/gemini-1.5-flash",
         api_key=gemini_key,
         temperature=0.7
     )
