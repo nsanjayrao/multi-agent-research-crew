@@ -1,5 +1,9 @@
 # 👥 Autonomous Research & Editorial Crew
 
+🌐 **Live demo:** [multi-agent-research-crew.streamlit.app](https://multi-agent-research-crew.streamlit.app)
+
+![Demo of the multi-agent research crew in action](demo/demo.gif)
+
 An autonomous multi-agent web dashboard built using the **CrewAI** and **Streamlit** frameworks. It orchestrates a collaborative, sequential workflow between three specialized AI agents (Researcher, Writer, and Editor) to research, draft, and publish professional reports, exporting them directly as **PDF documents**.
 
 This project is designed as a portfolio-ready demonstration of **Agentic AI**—the most requested and valuable skillset in modern Generative AI engineering.
