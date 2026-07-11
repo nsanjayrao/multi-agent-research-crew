@@ -192,8 +192,7 @@ with st.sidebar:
     else:
         st.success("🔑 API Key loaded securely from Streamlit Cloud Secrets!")
         
-    st.header("⚙️ Configure Research")
-    topic = st.text_input("Technology Topic to Research", value="Agentic AI", help="Enter any topic you want the agent team to investigate.")
+    st.header("⚙️ Settings")
 
     # gemini-3.1-flash-lite is the default because a single crew run makes 10-20+
     # LLM calls, and the free tier caps gemini-3.5-flash at only 20 requests/DAY --
@@ -315,8 +314,23 @@ else:
 
     st.markdown("---")
 
-    # Start Button
-    if st.button("🚀 Kickoff Agentic Workflow", type="primary"):
+    # Topic input lives on the main page (mirroring the RAG chatbot's design):
+    # a centered form with a wide input and full-width submit. In the sidebar it
+    # was invisible to anyone on a phone or with the sidebar collapsed.
+    st.subheader("🔬 What should the crew research?")
+    with st.form("kickoff_form"):
+        topic = st.text_input(
+            "Research topic",
+            label_visibility="collapsed",
+            placeholder="Enter any topic — e.g. Agentic AI, EV battery tech, AI in Indian healthcare…",
+        )
+        kickoff = st.form_submit_button("🚀 Kickoff Agentic Workflow", type="primary", use_container_width=True)
+
+    if kickoff and not topic.strip():
+        st.warning("⌨️ Type a topic in the box above, then kick off the workflow.")
+
+    if kickoff and topic.strip():
+        topic = topic.strip()
         # Interactive Step-by-Step Collaboration Statuses
         status_box = st.empty()
 
