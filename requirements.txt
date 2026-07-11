@@ -1,4 +1,11 @@
-crewai
-streamlit
-fpdf2
-google-genai
+# Pinned for reproducible builds on Streamlit Community Cloud (Python 3.12).
+# crewai pulls in an old numpy that has no wheel for Python 3.13/3.14 -- keep the
+# deployment runtime on 3.12 (choose it in Streamlit Cloud > Advanced settings; see README).
+crewai~=1.15.2
+streamlit~=1.59.0
+fpdf2~=2.8.7
+ddgs~=9.14.0
+# litellm: routes Gemini calls with automatic retries on transient 503s.
+# google-genai: CrewAI's Gemini provider imports it even on the LiteLLM path.
+litellm~=1.91.0
+google-genai~=2.11.0
